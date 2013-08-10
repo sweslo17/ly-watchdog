@@ -1,7 +1,39 @@
 {
 	"sweslo17@gmail.com":{
-		"facebook_id":"1174454767",
+		"provider":[
+			{
+				"name":"facebook",
+				"id":"1174454767"
+			},
+			{
+				"name":"email",
+				"id":"sweslo17@gmail.com"
+			},
+			{
+				"name":"email",
+				"id":"sweslo18@gmail.com"
+			}
+		],
 		"name":"sweslo17",
-		"term_list":["洪仲丘","中華電信" ]
+		"term_list":["狂犬病","洪仲丘","海峽" ]
+	},
+	"aaaaaa@gmail.com":{
+		"provider":[
+			{
+				"name":"facebook",
+				"id":"117675657567"
+			},
+			{
+				"name":"email",
+				"id":"aasdfasd@jlksajdfl.asdf"
+			},
+			{
+				"name":"email",
+				"id":"sweslo18@gmail.com"
+			}
+		],
+		"name":"aaaaaa",
+		"term_list":["狂犬病" ]
 	}
+
 }

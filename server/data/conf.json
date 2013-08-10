@@ -1,6 +1,21 @@
 {
-  "calander_last_id": 55300,
-  "module_last_id": [],
-  "calander_host": "api.ly.g0v.tw",
-  "calander_path": "/v0/collections/calendar?s={\"date\":-1}"
+  "pool_status": {
+    "calander": {
+      "count": 0,
+      "last_id": 55300
+    }
+  },
+  "module_status": {
+    "email": {
+      "update_status": {
+        "calander": 55200
+      }
+    }
+  },
+  "data_source": {
+    "calander": {
+      "host": "api.ly.g0v.tw",
+      "path": "/v0/collections/calendar?s={\"date\":-1}"
+    }
+  }
 }
