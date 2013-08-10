@@ -1,6 +1,6 @@
 var server = require("./server");
 var router = require("./router");
-var util = require("./util");
+var watchdog_util = require("./watchdog-util");
 //var test2 = require("./test2"); 
 global.test = 5;
 //util.test();
@@ -36,7 +36,7 @@ function sync(){
 			console.log('conf sync success');
 		}
 	});
-	fs.writeFile(data_file_root+'calander_pool.json',JSON.stringify(global.calander_pool,undefined,2),function(err){
+	fs.writeFile(data_file_root+'pool.calander.json',JSON.stringify(global.pool.calander,undefined,2),function(err){
 		if(err){
 			console.log('calander_pool sync error');
 		}else{
@@ -50,17 +50,21 @@ Handle['/query'] = requestHandler.query;
 global.user_list = JSON.parse(fs.readFileSync(data_file_root+'user.json', 'utf8'));
 global.term_list = JSON.parse(fs.readFileSync(data_file_root+'term.json', 'utf8'));
 global.config = JSON.parse(fs.readFileSync(data_file_root+'conf.json', 'utf8'));
-global.calander_pool = JSON.parse(fs.readFileSync(data_file_root+'calander_pool.json', 'utf8'));
-util.add_term("sweslo17@gmail.com","abc");
-util.remove_term("sweslo17@gmail.com","洪仲丘");
-console.log(JSON.stringify(global.user_list));
-console.log(JSON.stringify(global.term_list));
+//console.log(JSON.parse(fs.readFileSync(data_file_root+'pool.calander.json', 'utf8'))); 
+global.pool = {};
+global.pool.calander = JSON.parse(fs.readFileSync(data_file_root+'pool.calander.json', 'utf8'));
+//watchdog_util.add_term("sweslo17@gmail.com","abc");
+//watchdog_util.remove_term("sweslo17@gmail.com","洪仲丘");
+//console.log(JSON.stringify(global.user_list));
+//console.log(JSON.stringify(global.term_list));
+console.log(JSON.stringify(watchdog_util.poll("email","calander"),undefined,4));
+console.log("%j",global.config);
 var check_calander = new cornJob('* * * * *',function(){
 	console.log("check calander");
 	var option = {
-		host: global.config['calander_host'],
+		host: global.config.data_source['calander']['host'],
 		port: 80,
-		path: global.config['calander_path']
+		path: global.config.data_source['calander']['path']
 	};
 	var reply = '';
 	var reqGet = http.request(option, function(res) {
@@ -76,13 +80,13 @@ var check_calander = new cornJob('* * * * *',function(){
 		res.on('end',function(){
 			reply = JSON.parse(reply);
 			//console.log(reply);
-			var calander_last_id = global.config['calander_last_id'];
+			var calander_last_id = global.config.pool_status['calander']['last_id'];
 			for(var key in reply.entries)
 			{
 				//console.log(reply.entries[key]['id']+','+global.config['calander_last_id']);
-				if(reply.entries[key]['id']>global.config['calander_last_id'])
+				if(reply.entries[key]['id']>global.config.pool_status['calander']['last_id'])
 				{
-					global.calander_pool.push(reply.entries[key]);
+					global.pool['calander'].push(reply.entries[key]);
 					//console.log(reply.entries[key]);
 					if(reply.entries[key]['id']>calander_last_id)
 					{
@@ -90,13 +94,13 @@ var check_calander = new cornJob('* * * * *',function(){
 					}
 				}
 			}
-			if(global.config['calander_last_id'] == calander_last_id)
+			if(global.config.pool_status['calander']['last_id'] == calander_last_id)
 			{
 				console.log("no change");
 			}
 			else
 			{
-				global.config['calander_last_id'] = calander_last_id;
+				global.config.pool_status['calander']['last_id'] = calander_last_id;
 				console.log("updated, last calander id: "+ calander_last_id);
 				sync();
 			}
