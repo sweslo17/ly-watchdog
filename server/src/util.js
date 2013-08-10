@@ -37,6 +37,22 @@ function get_term(term)
 {
 	return global.term_list[term];
 }
+function update_user(user_id,profile)
+{
+	if(global.user_list[user_id] == undefined)
+	{
+		global.user_list[user_id] = {};
+	}
+	global.user_list[user_id] =  profile;
+}
+function poll(caller,datasource)
+{
+	if(global.module_status[caller]['update_status']['calander']<global.pool_status[datasource]['last_id'])
+	{
+		//match term and pack
+	}
+}
+exports.update_user = update_user;
 exports.add_term = add_term;
 exports.remove_term = remove_term;
 exports.get_term = get_term;
