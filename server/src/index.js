@@ -1,5 +1,12 @@
 var server = require("./server");
 var router = require("./router");
+var util = require("./util");
+//var test2 = require("./test2"); 
+global.test = 5;
+//util.test();
+//util.print("aaa");
+//test2.test();
+//test2.print("bbb");
 var http = require("http");
 var data_file_root = "../data/";
 var HashMap = require('hashmap').HashMap;
@@ -40,11 +47,14 @@ function sync(){
 var  Handle = {};
 Handle['/query'] = requestHandler.query;
 //Handle['/get_stat'] = requestHandler.get_stat;
-/*global.user_list = JSON.parse(fs.readFileSync(data_file_root+'user.json', 'utf8'));
-global.term_list = JSON.parse(fs.readFileSync(data_file_root+'term.json', 'utf8'));*/
+global.user_list = JSON.parse(fs.readFileSync(data_file_root+'user.json', 'utf8'));
+global.term_list = JSON.parse(fs.readFileSync(data_file_root+'term.json', 'utf8'));
 global.config = JSON.parse(fs.readFileSync(data_file_root+'conf.json', 'utf8'));
 global.calander_pool = JSON.parse(fs.readFileSync(data_file_root+'calander_pool.json', 'utf8'));
-console.log(global.config);
+util.add_term("sweslo17@gmail.com","abc");
+util.remove_term("sweslo17@gmail.com","洪仲丘");
+console.log(JSON.stringify(global.user_list));
+console.log(JSON.stringify(global.term_list));
 var check_calander = new cornJob('* * * * *',function(){
 	console.log("check calander");
 	var option = {
