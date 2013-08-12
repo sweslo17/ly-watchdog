@@ -39,11 +39,15 @@ function get_term(term)
 }
 function update_user(user_id,profile)
 {
+	output = {};
 	if(global.user_list[user_id] == undefined)
 	{
 		global.user_list[user_id] = {};
 	}
 	global.user_list[user_id] =  profile;
+	output['name'] = global.user_list[user_id].name;
+	output['term_list'] = global.user_list[user_id].term_list;
+	return output;
 }
 function get_user(user_id,token)
 {
