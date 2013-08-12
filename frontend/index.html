@@ -11,6 +11,20 @@
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+		<script src="js/oauth-google.js"></script>
+		<script> 
+			$(document).ready( function() {
+
+				$('#logout-button').hide();
+				$('#uHolder').hide();
+
+				$('#authorize-button').click( login);
+				$('#logout-button').click( function () {
+					$.ajax( 'https://www.google.com/accounts/Logout');
+					startLogoutPolling();
+				});
+			});
+		</script>
 	</head>
 
 	<body>
@@ -21,8 +35,14 @@
 					<h1>G0v 立委看門狗</h1>
 				</div>
 				<div class="col-lg-2 pull-right">
-					<div id="profile"></div>
-					<button id="authorize-button" class="btn btn-primary">Login</button>
+					<div id="profile">
+						<div id="uHolder">
+							<div id="uName"></div>
+							<img id="uPic" src="" style="width:64px; height:64px;"></img>
+						</div>
+						<button id="authorize-button" class="btn btn-primary">Login</button>
+						<button id="logout-button" class="btn btn-danger">Logout</button>
+					</div> 
 				</div>
 			</div>
 			<!-- infomation -->

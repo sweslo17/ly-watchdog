@@ -17,6 +17,17 @@
 		"name":"sweslo17",
 		"term_list":["狂犬病","洪仲丘","海峽" ]
 	},
+	"g0v.ly.watchdog@gmail.com":{
+		"provider":[
+			{
+				"name":"email",
+				"id":"g0v.ly.watchdog@gmail.com"
+			}
+		],
+		"name":"watchdog ly",
+		"term_list":["狂犬病","洪仲丘","海峽" ],
+		"auth_token":100962400349093778810
+	},
 	"aaaaaa@gmail.com":{
 		"provider":[
 			{
@@ -33,7 +44,8 @@
 			}
 		],
 		"name":"aaaaaa",
-		"term_list":["狂犬病" ]
+		"term_list":["狂犬病" ],
+		"auth_token": "aa"
 	}
 
 }

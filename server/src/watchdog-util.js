@@ -39,14 +39,17 @@ function get_term(term)
 }
 function update_user(user_id,profile)
 {
+	// initial
 	output = {};
-	if(global.user_list[user_id] == undefined)
-	{
+	// check out user exists
+	if(global.user_list[user_id] == undefined) {
 		global.user_list[user_id] = {};
+		global.user_list[user_id] =  profile;
 	}
-	global.user_list[user_id] =  profile;
-	output['name'] = global.user_list[user_id].name;
-	output['term_list'] = global.user_list[user_id].term_list;
+	// set profile 
+	// set output infomation 
+	output['name'] = global.user_list[user_id]['name'];
+	output['term_list'] = global.user_list[user_id]['term_list'];
 	return output;
 }
 function get_user(user_id,token)

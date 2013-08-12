@@ -13,6 +13,10 @@ var HashMap = require('hashmap').HashMap;
 var cornJob = require('cron').CronJob;
 var requestHandler = require("./requestHandler");
 var fs = require('fs');
+
+// auth
+var userUtils = require( './userUtils');
+
 function dateToYMD(date) {
 	var d = date.getDate();
 	var m = date.getMonth() + 1;
@@ -46,6 +50,8 @@ function sync(){
 }
 var  Handle = {};
 Handle['/query'] = requestHandler.query;
+Handle['/verify'] = userUtils.verify;
+
 //Handle['/get_stat'] = requestHandler.get_stat;
 global.user_list = JSON.parse(fs.readFileSync(data_file_root+'user.json', 'utf8'));
 global.term_list = JSON.parse(fs.readFileSync(data_file_root+'term.json', 'utf8'));
@@ -57,8 +63,8 @@ global.pool.calander = JSON.parse(fs.readFileSync(data_file_root+'pool.calander.
 //watchdog_util.remove_term("sweslo17@gmail.com","洪仲丘");
 //console.log(JSON.stringify(global.user_list));
 //console.log(JSON.stringify(global.term_list));
-console.log(JSON.stringify(watchdog_util.poll("email","calander"),undefined,4));
-console.log("%j",global.config);
+//console.log(JSON.stringify(watchdog_util.poll("email","calander"),undefined,4));
+//console.log("%j",global.config);
 var check_calander = new cornJob('* * * * *',function(){
 	console.log("check calander");
 	var option = {
@@ -116,4 +122,4 @@ var check_calander = new cornJob('* * * * *',function(){
 });
 check_calander.start();
 
-server.start();
+server.start( router.route, Handle);
