@@ -45,6 +45,20 @@ function update_user(user_id,profile)
 	}
 	global.user_list[user_id] =  profile;
 }
+function get_user(user_id,token)
+{
+	var output = {};
+	for(var user_key in global.user_list)
+	{
+		if(user_id == user_key && token == global.user_list[user_key].auth_token)
+		{
+			output['name'] = global.user_list[user_key].name;
+			output['term_list'] = global.user_list[user_key].term_list;
+			break;
+		}
+	}
+	return output;
+}
 function poll(caller,datasource)
 {
 	var output = [];
@@ -97,6 +111,7 @@ function poll(caller,datasource)
 	return output;
 }
 exports.update_user = update_user;
+exports.get_user = get_user;
 exports.add_term = add_term;
 exports.remove_term = remove_term;
 exports.get_term = get_term;
