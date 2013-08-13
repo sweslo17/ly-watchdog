@@ -32,22 +32,6 @@ function parseYMD(str) {
 	//console.log(y+','+m+','+d)
 	return new Date(y,m-1,d);
 }
-function sync(){
-	fs.writeFile(data_file_root+'conf.json',JSON.stringify(global.config,undefined,2),function(err){
-		if(err){
-			console.log('conf sync error');
-		}else{
-			console.log('conf sync success');
-		}
-	});
-	fs.writeFile(data_file_root+'pool.calander.json',JSON.stringify(global.pool.calander,undefined,2),function(err){
-		if(err){
-			console.log('calander_pool sync error');
-		}else{
-			console.log('calander_pool sync success');
-		}
-	});
-}
 var  Handle = {};
 Handle['/query'] = requestHandler.query;
 Handle['/verify'] = userUtils.verify;
@@ -84,7 +68,12 @@ var check_calander = new cornJob('* * * * *',function(){
 			//console.info('\n\nCall completed');
 		});
 		res.on('end',function(){
-			reply = JSON.parse(reply);
+			try{
+				reply = JSON.parse(reply);
+			}catch(e){
+				console.log('calander parse error:' e);
+				return;
+			}
 			//console.log(reply);
 			var calander_last_id = global.config.pool_status['calander']['last_id'];
 			for(var key in reply.entries)
@@ -108,7 +97,7 @@ var check_calander = new cornJob('* * * * *',function(){
 			{
 				global.config.pool_status['calander']['last_id'] = calander_last_id;
 				console.log("updated, last calander id: "+ calander_last_id);
-				sync();
+				watchdog_util.sync(data_file_root);
 			}
 			//console.log(global.calander_pool);
 			//console.log(global.config);

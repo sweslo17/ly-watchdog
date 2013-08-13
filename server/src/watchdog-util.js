@@ -1,3 +1,4 @@
+var fs = require('fs');
 function add_term(user_id,term)
 {
 	if(global.term_list.term == undefined)
@@ -117,9 +118,40 @@ function poll(caller,datasource)
 	global.config.module_status[caller]['update_status'][datasource]=global.config.pool_status[datasource]['last_id'];
 	return output;
 }
+function(data_file_root){
+	fs.writeFile(data_file_root+'conf.json',JSON.stringify(global.config,undefined,2),function(err){
+		if(err){
+			console.log('conf sync error');
+		}else{
+			console.log('conf sync success');
+		}
+	});
+	fs.writeFile(data_file_root+'pool.calander.json',JSON.stringify(global.pool.calander,undefined,2),function(err){
+		if(err){
+			console.log('calander_pool sync error');
+		}else{
+			console.log('calander_pool sync success');
+		}
+	});
+	fs.writeFile(data_file_root+'user.json',JSON.stringify(global.user_list,undefined,2),function(err){
+		if(err){
+			console.log('user sync error');
+		}else{
+			console.log('user sync success');
+		}
+	});
+	fs.writeFile(data_file_root+'term.json',JSON.stringify(global.term_list,undefined,2),function(err){
+		if(err){
+			console.log('term sync error');
+		}else{
+			console.log('term sync success');
+		}
+	});
+}
 exports.update_user = update_user;
 exports.get_user = get_user;
 exports.add_term = add_term;
 exports.remove_term = remove_term;
 exports.get_term = get_term;
 exports.poll = poll;
+exports.sync = sync;
