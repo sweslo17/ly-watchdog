@@ -118,7 +118,7 @@ function poll(caller,datasource)
 	global.config.module_status[caller]['update_status'][datasource]=global.config.pool_status[datasource]['last_id'];
 	return output;
 }
-function(data_file_root){
+function sync(data_file_root){
 	fs.writeFile(data_file_root+'conf.json',JSON.stringify(global.config,undefined,2),function(err){
 		if(err){
 			console.log('conf sync error');
