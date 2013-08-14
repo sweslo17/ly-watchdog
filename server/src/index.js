@@ -8,6 +8,9 @@ var dataSource = require("./dataSource");
 var fs = require('fs');
 // auth
 var userUtils = require( './userUtils');
+//email module
+var email_module = require('./email');
+
 var  Handle = {};
 Handle['/query'] = requestHandler.query;
 Handle['/verify'] = userUtils.verify;
@@ -19,5 +22,7 @@ global.pool = {};
 global.pool.calander = JSON.parse(fs.readFileSync(data_file_root+'pool.calander.json', 'utf8'));
 
 dataSource.start();
+
+email_module.start();
 
 server.start( router.route, Handle);
