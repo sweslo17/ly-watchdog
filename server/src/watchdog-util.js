@@ -81,15 +81,18 @@ function poll(caller,datasource)
 			temp_obj = {};
 			for(var data_key in global.pool[datasource])
 			{//for every data in pool
-				if(global.pool[datasource][data_key].name.indexOf(term_key) != -1 || global.pool[datasource][data_key].summary.indexOf(term_key)!=-1)
-				{//if data & term matched
-					term_match = true;
-					//push data into data
-					if(temp_obj['data'] == undefined)
-					{
-						temp_obj['data'] = [];
+				if(global.pool[datasource][data_key].id>global.config.module_status[caller]['update_status'][datasource])
+				{//if data is new to module
+					if(global.pool[datasource][data_key].name.indexOf(term_key) != -1 || global.pool[datasource][data_key].summary.indexOf(term_key)!=-1)
+					{//if data & term matched
+						term_match = true;
+						//push data into data
+						if(temp_obj['data'] == undefined)
+						{
+							temp_obj['data'] = [];
+						}
+						temp_obj['data'].push(global.pool[datasource][data_key]);
 					}
-					temp_obj['data'].push(global.pool[datasource][data_key]);
 				}
 			}
 			if(term_match == true)
