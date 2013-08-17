@@ -23,6 +23,9 @@ global.pool.calander = JSON.parse(fs.readFileSync(data_file_root+'pool.calander.
 
 dataSource.start();
 
+//var test = watchdog_util.poll("email","calander");
+//console.log("%j",test);
+//console.log(email_module.send(email_module.merge_mail(test)));
 email_module.start();
 
 server.start( router.route, Handle);

@@ -72,7 +72,8 @@ function poll(caller,datasource)
 	var output = [];
 	var last_id;
 	var term_match = false;
-	var term_obj = {}
+	var term_obj = {};
+	//console.log(global.config.module_status[caller]['update_status'][datasource]);
 	if(global.config.module_status[caller]['update_status'][datasource]<global.config.pool_status[datasource]['last_id'])
 	{//check module status
 		for(term_key in global.term_list)
